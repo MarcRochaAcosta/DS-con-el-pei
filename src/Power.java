@@ -1,4 +1,4 @@
-public class Power extends Function {
+public class Power implements Function {
     private Function func;
     private double exponent;
 
@@ -11,5 +11,10 @@ public class Power extends Function {
     public DualNumber evaluate(DualNumber dn) {
         DualNumber dn1 = func.evaluate(dn);
         return new DualNumber(Math.pow(dn1.getU(), exponent), exponent * Math.pow(dn1.getU(), exponent - 1) * dn1.getUprime());
+    }
+
+    @Override
+    public DualNumber evaluate(double[] x) {
+        return null;
     }
 }

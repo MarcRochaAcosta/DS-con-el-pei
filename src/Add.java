@@ -1,16 +1,21 @@
-public class Add extends Function {
-    private Function func1;
-    private Function func2;
+public class Add extends BinaryOperator {
+    public Add(Function left, Function right) {
+        super(left, right);
+    }
 
-    public Add(Function func1, Function func2) {
-        this.func1 = func1;
-        this.func2 = func2;
+    public DualNumber evaluate(DualNumber dn) {
+        DualNumber dn1 = left.evaluate(dn);
+        DualNumber dn2 = right.evaluate(dn);
+        return new DualNumber(dn1.u + dn2.u, dn1.uprime + dn2.uprime);
     }
 
     @Override
-    public DualNumber evaluate(DualNumber dn) {
-        DualNumber dn1 = func1.evaluate(dn);
-        DualNumber dn2 = func2.evaluate(dn);
-        return new DualNumber(dn1.getU() + dn2.getU(), dn1.getUprime() + dn2.getUprime());
+    public DualNumber evaluate(double[] x) {
+        // Create a new DualNumber with the value of the left function evaluated at x
+        DualNumber dn1 = left.evaluate(x);
+        // Create a new DualNumber with the value of the right function evaluated at x
+        DualNumber dn2 = right.evaluate(x);
+        // Return a new DualNumber with the sum of the values of the two DualNumbers
+        return new DualNumber(dn1.u + dn2.u, dn1.uprime + dn2.uprime);
     }
 }
