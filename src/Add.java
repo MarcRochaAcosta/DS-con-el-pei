@@ -3,6 +3,7 @@ public class Add extends BinaryOperator {
         super(left, right);
     }
 
+    @Override
     public DualNumber evaluate(DualNumber dn) {
         DualNumber dn1 = left.evaluate(dn);
         DualNumber dn2 = right.evaluate(dn);
@@ -11,11 +12,18 @@ public class Add extends BinaryOperator {
 
     @Override
     public DualNumber evaluate(double[] x) {
-        // Create a new DualNumber with the value of the left function evaluated at x
         DualNumber dn1 = left.evaluate(x);
-        // Create a new DualNumber with the value of the right function evaluated at x
         DualNumber dn2 = right.evaluate(x);
-        // Return a new DualNumber with the sum of the values of the two DualNumbers
-        return new DualNumber(dn1.u + dn2.u, dn1.uprime + dn2.uprime);
+
+        // Validación adicional
+        if (dn1.uprimeArray == null || dn2.uprimeArray == null) {
+            throw new NullPointerException("Add: uprimeArray es null en alguna función.");
+        }
+
+        double[] uprimeArray = new double[x.length];
+        for (int i = 0; i < uprimeArray.length; i++) {
+            uprimeArray[i] = dn1.uprimeArray[i] + dn2.uprimeArray[i];
+        }
+        return new DualNumber(dn1.u + dn2.u, uprimeArray);
     }
 }

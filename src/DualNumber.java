@@ -1,7 +1,7 @@
 public class DualNumber {
     public double u;
     public double uprime;
-    public double[] uprimeArray; // Para el caso multidimensional
+    public double[] uprimeArray;
 
     public DualNumber(double u, double uprime) {
         this.u = u;
@@ -10,12 +10,13 @@ public class DualNumber {
 
     public DualNumber(double u, double[] uprimeArray) {
         this.u = u;
-        this.uprimeArray = uprimeArray;
+        this.uprimeArray = uprimeArray != null ? uprimeArray : new double[0]; // Evita null
     }
 
     public double getU() {
-        return  u;
+        return u;
     }
+
     public double getUprime() {
         return uprime;
     }

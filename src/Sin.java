@@ -14,9 +14,14 @@ public class Sin implements Function {
     @Override
     public DualNumber evaluate(double[] x) {
         DualNumber dn1 = func.evaluate(x);
-        int len = dn1.uprimeArray.length;
-        double[] uprimeArray = new double[len];
-        for (int i = 0; i < len; i++) {
+
+        // Validación adicional
+        if (dn1.uprimeArray == null) {
+            throw new NullPointerException("Sin: uprimeArray es null.");
+        }
+
+        double[] uprimeArray = new double[x.length];
+        for (int i = 0; i < uprimeArray.length; i++) {
             uprimeArray[i] = Math.cos(dn1.u) * dn1.uprimeArray[i];
         }
         return new DualNumber(Math.sin(dn1.u), uprimeArray);
